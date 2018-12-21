@@ -9,6 +9,7 @@ export class FileSaveAsComponent {
   @Input() fileContent: any;
 
   saveAsProject(){
+    //you can enter your own file name and extension
     this.writeContents(this.fileContent, 'Sample File'+'.txt', 'text/plain');
   }
   writeContents(content, fileName, contentType) {

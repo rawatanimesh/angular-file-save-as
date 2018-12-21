@@ -1,4 +1,4 @@
-# StopWatch
+# File Save As
 
 Light weight file 'Save As' angular component without external libraries/dependencies.
 
@@ -6,7 +6,7 @@ Light weight file 'Save As' angular component without external libraries/depende
 
 ## Demo
 
-Checkout the demo on StackBlitz - https://file-reader.stackblitz.io
+Checkout the demo on StackBlitz - https://angular-file-save-as.stackblitz.io
 
 ## Features
 ```
@@ -20,73 +20,60 @@ Checkout the demo on StackBlitz - https://file-reader.stackblitz.io
 ### Add Component in module
 Import
 `
-import { FileReaderComponent } from './file-reader/file-reader.component';
+import { FileSaveAsComponent } from './file-save-as/file-save-as.component';
 `
 
 Declaration
 `
 declarations: [
-    TimerComponent
+    FileSaveAsComponent
   ]
 `
 
 ### Add selector in HTML
 ```
-<app-file-reader></app-file-reader>
+<file-save-as [fileContent]="fileData"></file-save-as>
 ```
-### Dependencies
-None
 
+### Selector Properties
+Property `fileContent` accepts the data you want to save in file.
 
-### timer.component.ts
+### file-save-as.component.ts
 ``` typescript
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-file-reader',
-  templateUrl: './file-reader.component.html',
-  styleUrls: ['./file-reader.component.scss']
+  selector: 'file-save-as',
+  templateUrl: './file-save-as.component.html',
+  styleUrls: ['./file-save-as.component.scss']
 })
-export class FileReaderComponent {
-  file: any;
-  tempFileData: any;
-  openProject() {
-    document.getElementById('my_file').click();
+export class FileSaveAsComponent {
+  @Input() fileContent: any;
+
+  //you can enter your own file name and extension
+  saveAsProject(){
+    this.writeContents(this.fileContent, 'Sample File'+'.txt', 'text/plain');
   }
-  fileSelection(event) {
-    this.file = event.target.files[0];
-    console.log(this.file.name);
-    console.log();
-    if (this.file.name.split('.').pop() == 'txt' ||
-      this.file.name.split('.').pop() == 'docx' ||
-      this.file.name.split('.').pop() == 'doc') {
-      let fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        this.tempFileData = fileReader.result;
-        console.log('Project Data from file', JSON.parse(this.tempFileData));
-        // alert("Success");
-      }
-      fileReader.readAsBinaryString(this.file);
-    }
-    else {
-      alert("Please choose a txt or doc file.");
-    }
+  writeContents(content, fileName, contentType) {
+    var a = document.createElement('a');
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
   }
 }
 
 ```
 
-### timer.component.html
+### file-save-as.component.ts.component.html
 ``` typescript
 <div class="file-container">
-  <button class="file-button" (click)="openProject()">Open File</button>
-  <input type="file" id="my_file" (change)="fileSelection($event)" class="file_exp_opener">
+  <button class="file-button" (click)="saveAsProject()">Save As</button>
   <br>
 </div>
-{{tempFileData }}
 ```
 
-### timer.component.scss
+### file-save-as.component.ts.component.scss
 ``` typescript
 .file-container{
     text-align: center;
@@ -106,9 +93,6 @@ export class FileReaderComponent {
 .file-button:hover{
     background: #0069d9;
     border: 1px solid #0062cc;
-  }
-#my_file{
-    display: none;
   }
 ```
 
