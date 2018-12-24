@@ -2,7 +2,7 @@
 
 Light weight file 'Save As' angular component without external libraries/dependencies.
 
-![alt text](img/stopwatch.png)
+![alt text](img/file-save-as.png)
 
 ## Demo
 
