@@ -65,7 +65,7 @@ export class FileSaveAsComponent {
 
 ```
 
-### file-save-as.component.ts.component.html
+### file-save-as.component.html
 ``` typescript
 <div class="file-container">
   <button class="file-button" (click)="saveAsProject()">Save As</button>
@@ -73,7 +73,7 @@ export class FileSaveAsComponent {
 </div>
 ```
 
-### file-save-as.component.ts.component.scss
+### file-save-as.component.scss
 ``` typescript
 .file-container{
     text-align: center;
